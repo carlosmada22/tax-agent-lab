@@ -123,6 +123,7 @@ processed_content_*/
 conversation_memory.db
 conversation_memory.db-shm
 conversation_memory.db-wal
+memory.sqlite
 
 # IDE files
 .vscode/

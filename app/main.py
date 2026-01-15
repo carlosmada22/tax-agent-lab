@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 from app.graph import GRAPH
+from app.memory import load_history, save_history
 
 app = FastAPI()
 
@@ -12,6 +13,7 @@ MEMORY = {}  # user_id -> list[str]
 class ChatRequest(BaseModel):
     user_id: str
     message: str
+    thread_id: str | None = None
 
 
 class ChatResponse(BaseModel):
@@ -24,9 +26,15 @@ def health():
     return {"status": "OK"}
 
 
+@app.get("/history/{user_id}")
+def history(user_id: str):
+    return {"messages": load_history(user_id)}
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
-    history = MEMORY.get(req.user_id, [])
+    thread = req.thread_id or req.user_id
+    history = load_history(thread)
     history = history + [f"user: {req.message}"]
 
     state = {
@@ -37,9 +45,7 @@ def chat(req: ChatRequest):
     }
 
     out = GRAPH.invoke(state)
-
-    # Guardar historial actualizado
-    MEMORY[req.user_id] = out["messages"]
+    save_history(thread, out["messages"])
 
     # Último mensaje del asistente
     assistant_msg = ""
