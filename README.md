@@ -27,5 +27,23 @@ Example conversations:
    {"user_id":"124","message":"How do tax refunds work?"}
    {"assistant_message": "Here is general tax information. I cannot provide personal tax advice, but I can explain rules and concepts.", "last_agent": "tax_info"}
 3. Persistence
-   {"messages":["user: Hi, Im 50","assistant: I can help with general questions. Ask me anything.","user: And what about deductions?","assistant: Here is general tax information. I cannot provide personal tax advice, but I can explain rules and concepts."]}
+   {"user_id":"42","message":"Hi, I'm 50"}
+   {
+      "assistant_message": "I can help with general questions. Ask me anything.",
+      "last_agent": "general"
+   }
+   {"user_id":"42","message":"And what about deductions?"}
+   {
+      "assistant_message": "Here is general tax information. I cannot provide personal tax advice, but I can explain rules and concepts.",
+      "last_agent": "tax_info"
+   }
+   {
+      "messages": [
+         "user: Hi, Im 42",
+         "assistant: I can help with general questions. Ask me anything.",
+         "user: And what about deductions?",
+         "assistant: Here is general tax information. I cannot provide personal tax advice, but I can explain rules and concepts."
+      ]
+   }
+
 
