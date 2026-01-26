@@ -67,6 +67,7 @@ class AgentState(TypedDict):
     prompt_version: Literal["v1", "v2"]
     last_prompt: str  # debug: last built prompt text
     pending_clarification: bool
+    profile: dict
 
 
 def supervisor(state: AgentState) -> AgentState:
